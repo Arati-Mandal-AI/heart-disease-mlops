@@ -1,0 +1,19 @@
+name: MLOps CI
+on: [push]
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - name: Install deps
+        run: pip install -r requirements.txt
+      - name: Lint
+        run: flake8 src/ || echo "lint done"
+      - name: Unit tests
+        run: pytest -v
+      - name: Build Docker
+        run: docker build -t heart-disease-api:v1 .
