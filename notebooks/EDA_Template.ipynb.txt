@@ -1,0 +1,1 @@
+See src/eda.py for EDA script - create Jupyter notebook with histograms, correlation heatmap, class balance
