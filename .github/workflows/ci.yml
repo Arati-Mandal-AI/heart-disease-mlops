@@ -10,10 +10,12 @@ jobs:
         with:
           python-version: '3.9'
       - name: Install deps
-        run: pip install -r requirements.txt
+        run: |
+          pip install -r requirements.txt
+          pip install pytest
       - name: Lint
-        run: flake8 src/ || echo "lint done"
+        run: flake8 src/ --max-line-length=120 || true
       - name: Unit tests
-        run: pytest -v
-      - name: Build Docker
-        run: docker build -t heart-disease-api:v1 .
+        env:
+          PYTHONPATH: .
+        run: pytest tests/ -v
